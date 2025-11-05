@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\usepackage{authblk}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\lstdefinestyle{code}{basicstyle=\ttfamily\small,breaklines=true,frame=single,columns=fullflexible,showstringspaces=false,keepspaces=true}
+\newcommand{\aStar}{a_{\ast}}
+\newcommand{\grad}{\nabla}
+\newcommand{\diver}{\nabla\!\cdot\!}
+\newcommand{\WAIC}{\mathrm{WAIC}}
+
+\title{\bf A Registered Protocol for Testing a Single-Scale Nonlinear Elliptic Gravity Law and a Biological ``Sequention'' Potential}
+\author[1]{Henry Arellano}
+\affil[1]{Independent Researcher}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We provide a preregistered protocol and reference pipelines for (i) a single-scale, baryons-only nonlinear elliptic gravity law evaluated jointly on galaxy rotation curves and strong lensing; and (ii) an elliptic potential on genotype--phenotype--environment space (Sequention) with preregistered predictive benchmarks. This document includes hypotheses, inclusion criteria, blinding, numerical solvers, uncertainty propagation, pass/fail thresholds, and a step-by-step guide for replication.
+\end{abstract}
+
+\section{Hypotheses and Inclusion Criteria}
+Physics: (H1) RC median $\chi^2/\nu \le 1.3$; (H2) Lensing median $|\hat{\theta}_E-\theta_E|/\theta_E \le 0.15$ with fixed $\aStar$ and $\mu$; (H3) parsimony vs $\Lambda$CDM+NFW; (H4) $|\gamma-1|<2\times10^{-5}$. Biology: (B1) $\ge$10\% RMSE lift vs GLM/GP with $p<0.01$; (B2) canalization order-invariance within $\pm 5\%$.
+
+\section{Model and Numerics (Physics)}
+Solve $\diver[\mu(\|\grad\Phi\|/\aStar)\grad\Phi]=4\pi G\rho_b$ with $\mu(y)=y/(1+y^n)^{1/n}$, $n\in\{1,2,3\}$ chosen once. Finite-volume, uniformly elliptic discretization; nonlinear multigrid with residual drop $\ge 10^8$; fallback Newton--Krylov. Observables: $v_c(r)$ and $\theta_E$ from lensing potential. Bootstrap $N=1024$ for uncertainties.
+
+\section{Model and Numerics (Biology)}
+Discrete graph operator with flux $\mu_{\text{bio}}(|\Delta U|/(a^\dagger\Delta))(\Delta U/\Delta)$; optimization by nonlinear CG (Wolfe) + FISTA for group lasso. Baselines: GLM (pairwise + ridge), GP (additive/RBF).
+
+\section{Blinding, Metrics, and Pass/Fail}
+Freeze $n$ and calibrate $\aStar$ on a preregistered RC subset; publish config SHA256. Keep lensing labels hidden until predictions are hashed. Metrics: RC $\chi^2/\nu$, lensing fractional error, $\WAIC$/$p_{\text{eff}}$ vs baseline; Solar bound via $|\gamma-1|$.
+
+\section{Step-by-Step Guide}
+\begin{enumerate}[leftmargin=2em]
+\item Create repo (this skeleton) and commit frozen \texttt{configs/config.json} (hash printed to \texttt{configs/config.hash}).
+\item Register on OSF/AsPredicted: paste prereg text from \texttt{physics\_prereg/OSF\_prereg.md} and \texttt{biology\_prereg/OSF\_prereg.md}; add hashes.
+\item Run blinded predictions using \texttt{scripts/run\_blinded.sh}; store artifacts in \texttt{results/}.
+\item Unblind, compute metrics, and generate \texttt{results/reports/report.md} via \texttt{scripts/make\_audit.sh}.
+\item Archive: push to GitHub; create a release; (optionally) mint a DOI via Zenodo.
+\end{enumerate}
+
+\bibliographystyle{unsrtnat}
+\bibliography{refs}
+\end{document}
