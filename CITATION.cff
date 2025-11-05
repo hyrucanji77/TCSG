@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "TCSG — Timeless Counterspace & Sequention Gravity (Prereg + Reference Pipelines)"
+message: "If you use this package, please cite the associated prereg/paper."
+type: software
+version: "1.0.0"
+authors:
+  - family-names: Arellano
+    given-names: Henry
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+license: Apache-2.0
+repository-code: "https://github.com/<your-username>/TCSG"
+preferred-citation:
+  type: article
+  title: "A Registered Protocol for Testing a Single-Scale Nonlinear Elliptic Gravity Law and a Biological 'Sequention' Potential"
+  authors:
+    - family-names: Arellano
+      given-names: Henry
+  year: 2025
+  journal: "arXiv"
