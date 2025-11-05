@@ -36,6 +36,6 @@ GitHub Actions will also compile on every push (see `.github/workflows/latex.yml
 
 ## Citation
 If you use this repository, please cite:
-> Arellano, H. *A Registered Protocol for Testing a Single-Scale Nonlinear Elliptic Gravity Law and a Biological “Sequention” Potential: Design, Blinding, Metrics, and Step-by-Step Guide.* arXiv:YYYY.NNNNN (2025).
+> Arellano-Peña, H. *A Registered Protocol for Testing a Single-Scale Nonlinear Elliptic Gravity Law and a Biological “Sequention” Potential: Design, Blinding, Metrics, and Step-by-Step Guide. (2025).
 
 (Replace the arXiv ID once available.)
